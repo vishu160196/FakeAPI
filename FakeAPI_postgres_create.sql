@@ -1,4 +1,4 @@
-CREATE TABLE "Posts" (
+CREATE TABLE "Posts_vishal_singh" (
 	"userId" bigint NOT NULL,
 	"id" bigint NOT NULL,
 	"title" TEXT NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE "Posts" (
 
 
 
-CREATE TABLE "Users" (
+CREATE TABLE "Users_vishal_singh" (
 	"id" bigint NOT NULL,
 	"name" TEXT NOT NULL,
 	"username" TEXT NOT NULL UNIQUE,
@@ -24,21 +24,21 @@ CREATE TABLE "Users" (
 
 
 
-CREATE TABLE "Addresses" (
+CREATE TABLE "Addresses_vishal_singh" (
 	"userId" bigint NOT NULL,
 	"street" TEXT NOT NULL,
 	"suite" TEXT NOT NULL,
 	"city" TEXT NOT NULL,
 	"zipcode" TEXT NOT NULL,
-	"geoLat" double NOT NULL,
-	"geoLon" double NOT NULL
+	"geoLat" float NOT NULL,
+	"geoLon" float NOT NULL
 ) WITH (
   OIDS=FALSE
 );
 
 
 
-CREATE TABLE "UserCompanies" (
+CREATE TABLE "UserCompanies_vishal_singh" (
 	"userId" bigint NOT NULL,
 	"name" TEXT NOT NULL,
 	"catchPhrase" TEXT NOT NULL,
@@ -49,7 +49,7 @@ CREATE TABLE "UserCompanies" (
 
 
 
-CREATE TABLE "Todos" (
+CREATE TABLE "Todos_vishal_singh" (
 	"userId" bigint NOT NULL,
 	"id" bigint NOT NULL,
 	"title" TEXT NOT NULL,
@@ -61,7 +61,7 @@ CREATE TABLE "Todos" (
 
 
 
-CREATE TABLE "Albums" (
+CREATE TABLE "Albums_vishal_singh" (
 	"userId" bigint NOT NULL,
 	"id" bigint NOT NULL,
 	"title" TEXT NOT NULL,
@@ -72,7 +72,7 @@ CREATE TABLE "Albums" (
 
 
 
-CREATE TABLE "Photos" (
+CREATE TABLE "Photos_vishal_singh" (
 	"id" bigint NOT NULL,
 	"albumId" bigint NOT NULL,
 	"title" TEXT NOT NULL,
@@ -85,7 +85,7 @@ CREATE TABLE "Photos" (
 
 
 
-CREATE TABLE "Comments" (
+CREATE TABLE "Comments_vishal_singh" (
 	"postId" bigint NOT NULL,
 	"name" TEXT NOT NULL,
 	"id" serial NOT NULL,
@@ -98,18 +98,18 @@ CREATE TABLE "Comments" (
 
 
 
-ALTER TABLE "Posts" ADD CONSTRAINT "Posts_fk0" FOREIGN KEY ("userId") REFERENCES "Users"("id");
+ALTER TABLE "Posts_vishal_singh" ADD CONSTRAINT "Posts_fk0" FOREIGN KEY ("userId") REFERENCES "Users_vishal_singh"("id");
 
 
-ALTER TABLE "Addresses" ADD CONSTRAINT "Addresses_fk0" FOREIGN KEY ("userId") REFERENCES "Users"("id");
+ALTER TABLE "Addresses_vishal_singh" ADD CONSTRAINT "Addresses_fk0" FOREIGN KEY ("userId") REFERENCES "Users_vishal_singh"("id");
 
-ALTER TABLE "UserCompanies" ADD CONSTRAINT "UserCompanies_fk0" FOREIGN KEY ("userId") REFERENCES "Users"("id");
+ALTER TABLE "UserCompanies_vishal_singh" ADD CONSTRAINT "UserCompanies_fk0" FOREIGN KEY ("userId") REFERENCES "Users_vishal_singh"("id");
 
-ALTER TABLE "Todos" ADD CONSTRAINT "Todos_fk0" FOREIGN KEY ("userId") REFERENCES "Users"("id");
+ALTER TABLE "Todos_vishal_singh" ADD CONSTRAINT "Todos_fk0" FOREIGN KEY ("userId") REFERENCES "Users_vishal_singh"("id");
 
-ALTER TABLE "Albums" ADD CONSTRAINT "Albums_fk0" FOREIGN KEY ("userId") REFERENCES "Users"("id");
+ALTER TABLE "Albums_vishal_singh" ADD CONSTRAINT "Albums_fk0" FOREIGN KEY ("userId") REFERENCES "Users_vishal_singh"("id");
 
-ALTER TABLE "Photos" ADD CONSTRAINT "Photos_fk0" FOREIGN KEY ("albumId") REFERENCES "Albums"("id");
+ALTER TABLE "Photos_vishal_singh" ADD CONSTRAINT "Photos_fk0" FOREIGN KEY ("albumId") REFERENCES "Albums_vishal_singh"("id");
 
-ALTER TABLE "Comments" ADD CONSTRAINT "Comments_fk0" FOREIGN KEY ("postId") REFERENCES "Posts"("id");
+ALTER TABLE "Comments_vishal_singh" ADD CONSTRAINT "Comments_fk0" FOREIGN KEY ("postId") REFERENCES "Posts_vishal_singh"("id");
 
