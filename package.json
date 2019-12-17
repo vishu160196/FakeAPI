@@ -1,0 +1,28 @@
+{
+  "name": "fakeapi",
+  "version": "1.0.0",
+  "description": "Nodejs script to fetch resources from Jsonplaceholder and add them to postgres",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vishu160196/FakeAPI.git"
+  },
+  "keywords": [
+    "nodejs",
+    "postgres",
+    "npm"
+  ],
+  "author": "Vishal Singh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vishu160196/FakeAPI/issues"
+  },
+  "homepage": "https://github.com/vishu160196/FakeAPI#readme",
+  "dependencies": {
+    "axios": "^0.19.0",
+    "pg-promise": "^10.3.1"
+  }
+}
