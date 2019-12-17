@@ -107,10 +107,6 @@ const populateUserInfo = function () {
 	  .then(function (response) {
 	    // handle success
 	    let data = response.data;
-	    let totalRecords = data.length;
-
-	    
-
 	    data.forEach(e => {
 	    	let userRec = {};
 	    	userCols.forEach(col => {
@@ -147,9 +143,6 @@ const populateUserInfo = function () {
 	    	addressRecordsToBeWritten.push(addressRec);
 	    	companyRecordsToBeWritten.push(companyRec);
 	    });
-
-	    console.log(addressRecordsToBeWritten);
-	    console.log(companyRecordsToBeWritten);
 	}).catch(function (error) {
     // handle error
     	console.log(error);
@@ -157,8 +150,6 @@ const populateUserInfo = function () {
 	  .finally(function () {
 	    // always executed
 	  });
-
-
 	};
 
 	let insertUsers = function(){
@@ -174,13 +165,9 @@ const populateUserInfo = function () {
 	        // error;
 	        console.log(error);
 	    });
-
-
 	};
 
 	let insertAddresses = function(){
-
-
 		// insert addresses
 	    const queryAddresses = pgp.helpers.insert(addressRecordsToBeWritten, csAddresses);
 	    return db.none(queryAddresses)
@@ -191,14 +178,10 @@ const populateUserInfo = function () {
 	        // error;
 	        console.log(error);
 	    });
-
-
 	};
 	
 
     let insertCompanies = function(){
-
-
     	// insert companies
 	    const queryCompanies = pgp.helpers.insert(companyRecordsToBeWritten, csUserCompanies);
 	    return db.none(queryCompanies)
@@ -209,109 +192,106 @@ const populateUserInfo = function () {
 	        // error;
 	        console.log(error);
 	    });
-
-
-
     };
 
-    getRecords().then(function(){
+    return getRecords().then(function(){
     	return insertUsers();
     }).then(function(){
     	return insertAddresses();
     }).then(function(){
     	return insertCompanies();
-    })
-
-    
-
+    });
   };
 
-populateUserInfo();
 
 
-// const postsCols = ['userId', 'id', 'title', 'body'];
-// const todosCols = ['userId', 'id', 'title', 'completed'];
-// const albumsCols = ['userId', 'id', 'title'];
-// const photosCols = ['id', 'albumId', 'title', 'url', 'thumbnailUrl'];
-// const commentsCols = ['postId', 'name', 'id', 'email', 'body'];
+
+const postsCols = ['userId', 'id', 'title', 'body'];
+const todosCols = ['userId', 'id', 'title', 'completed'];
+const albumsCols = ['userId', 'id', 'title'];
+const photosCols = ['id', 'albumId', 'title', 'url', 'thumbnailUrl'];
+const commentsCols = ['postId', 'name', 'id', 'email', 'body'];
 
 
-// const csPosts = new pgp.helpers.ColumnSet(postsCols, {table: 'Posts_vishal_singh'});
-// const csTodos = new pgp.helpers.ColumnSet(todosCols, {table: 'Todos_vishal_singh'});
-// const csAlbums = new pgp.helpers.ColumnSet(albumsCols, {table: 'Albums_vishal_singh'});
-// const csPhotos = new pgp.helpers.ColumnSet(photosCols, {table: 'Photos_vishal_singh'});
-// const csComments = new pgp.helpers.ColumnSet(commentsCols, {table: 'Comments_vishal_singh'});
+const csPosts = new pgp.helpers.ColumnSet(postsCols, {table: 'Posts_vishal_singh'});
+const csTodos = new pgp.helpers.ColumnSet(todosCols, {table: 'Todos_vishal_singh'});
+const csAlbums = new pgp.helpers.ColumnSet(albumsCols, {table: 'Albums_vishal_singh'});
+const csPhotos = new pgp.helpers.ColumnSet(photosCols, {table: 'Photos_vishal_singh'});
+const csComments = new pgp.helpers.ColumnSet(commentsCols, {table: 'Comments_vishal_singh'});
 
 
-// const populateOtherTables = function(relUrl, tableName){
-// 	axios.get(relUrl)
-//   .then(function (response) {
-//     // handle success
-//     let cs, cols;
-//     let data = response.data;
+const populateOtherTables = function(relUrl, tableName){
+	return axios.get(urlify(relUrl))
+  .then(function (response) {
+    // handle success
+    let cs, cols;
+    let data = response.data;
 
-//     if(tableName === 'Posts_vishal_singh'){
-//     	cs = csPosts;
-//     	cols = postsCols;
-//     }
-//     if(tableName === 'Todos_vishal_singh'){
-//     	cs = csTodos;
-//     	cols = todosCols;
-//     }
-//     if(tableName === 'Albums_vishal_singh'){
-//     	cs = csAlbums;
-//     	cols = albumsCols;
-//     }
-//     if(tableName === 'Photos_vishal_singh'){
-//     	cs = csPhotos;
-//     	cols = photosCols;
-//     }
-//     if(tableName === 'Comments_vishal_singh'){
-//     	cs = csComments;
-//     	cols = commentsCols;
-//     }
+    if(tableName === 'Posts_vishal_singh'){
+    	cs = csPosts;
+    	cols = postsCols;
+    }
+    if(tableName === 'Todos_vishal_singh'){
+    	cs = csTodos;
+    	cols = todosCols;
+    }
+    if(tableName === 'Albums_vishal_singh'){
+    	cs = csAlbums;
+    	cols = albumsCols;
+    }
+    if(tableName === 'Photos_vishal_singh'){
+    	cs = csPhotos;
+    	cols = photosCols;
+    }
+    if(tableName === 'Comments_vishal_singh'){
+    	cs = csComments;
+    	cols = commentsCols;
+    }
 
-//     recsToBeWritten = [];
-//     data.forEach(e => {
-//     	let rec={};
-//     	cols.forEach(col => {
-//     		rec[col] = e[col];
-//     	});
-//     });
+    let recsToBeWritten = [];
+    data.forEach(e => {
+    	let rec={};
+    	cols.forEach(col => {
+    		rec[col] = e[col];
+    	});
+    	recsToBeWritten.push(rec);
+    });
 
-//     // insert records
-//     const query = pgp.helpers.insert(recsToBeWritten, cs);
-//     db.none(query)
-//     .then(data => {
-//         console.log('success\ndata: ' + data);
-//     })
-//     .catch(error => {
-//         // error;
-//         console.log(error);
-//     });
+    // insert records
+    const query = pgp.helpers.insert(recsToBeWritten, cs);
+    db.none(query)
+    .then(data => {
+        console.log('success\ndata: ' + data);
+    })
+    .catch(error => {
+        // error;
+        console.log(error);
+    });
 
-//   })
-//   .catch(function (error) {
-//     // handle error
-//     console.log(error);
-//   })
-//   .finally(function () {
-//     // always executed
-//   });
+  })
+  .catch(function (error) {
+    // handle error
+    console.log(error);
+  })
+  .finally(function () {
+    // always executed
+  });
 
-// }
+}
 
-// // populate Posts table
-// populateOtherTables('posts', 'Posts_vishal_singh');
-
-// // populate Todos table
-// populateOtherTables('todos', 'Todos_vishal_singh');
-
-// // populate Albums table
-// populateOtherTables('albums', 'Albums_vishal_singh');
-
-// // populate Photos table
-// populateOtherTables('photos', 'Photos_vishal_singh');
-
-// // populate Comments table
-// populateOtherTables('comments', 'Comments_vishal_singh');
+populateUserInfo().then(function(){
+	// populate Posts table
+	return populateOtherTables('posts', 'Posts_vishal_singh');
+}).then(function(){
+	// populate Todos table
+	populateOtherTables('todos', 'Todos_vishal_singh');
+}).then(function(){
+	// populate Albums table
+	populateOtherTables('albums', 'Albums_vishal_singh');
+}).then(function(){
+	// populate Photos table
+	populateOtherTables('photos', 'Photos_vishal_singh');
+}).then(function(){
+	// populate Comments table
+	populateOtherTables('comments', 'Comments_vishal_singh');
+});
